@@ -18,7 +18,7 @@
 @section('content')
     <div id="map"></div>
 
-    <!-- Modal -->
+    <!-- Modal Create Point-->
     <div class="modal fade" id="createpointModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -45,6 +45,83 @@
                         <div class="mb-3">
                             <label for="geom_point" class="form-label">Geometry</label>
                             <textarea class="form-control" id="geom_point" name="geom_point" rows="3"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Create Polyline-->
+    <div class="modal fade" id="createpolylineModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Create Polyline</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="POST" action="{{ route('polylines.store') }}">
+                    <div class="modal-body">
+
+                        @csrf
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Fill polyline name">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="geom_polyline" class="form-label">Geometry</label>
+                            <textarea class="form-control" id="geom_polyline" name="geom_polyline" rows="3"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Create Polygon-->
+    <div class="modal fade" id="createpolygonModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Create Polygon</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="POST" action="{{ route('polygons.store') }}">
+                    <div class="modal-body">
+
+                        @csrf
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Fill polygon name">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="geom_polygon" class="form-label">Geometry</label>
+                            <textarea class="form-control" id="geom_polygon" name="geom_polygon" rows="3"></textarea>
                         </div>
 
                     </div>
@@ -108,11 +185,20 @@
 
             if (type === 'polyline') {
                 console.log("Create " + type);
+                $('#geom_polyline').val(objectGeometry);
 
-                //modal polyline
+                 //modal polyline
+                $('#createpolylineModal').modal('show');
+
 
             } else if (type === 'polygon' || type === 'rectangle') {
                 console.log("Create " + type);
+                $('#geom_polygon').val(objectGeometry);
+
+                 //modal polyline
+                $('#createpolygonModal').modal('show');
+
+
             } else if (type === 'marker') {
                 console.log("Create " + type);
 
