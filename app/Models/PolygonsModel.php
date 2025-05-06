@@ -27,6 +27,7 @@ class PolygonsModel extends Model
                 'type' => 'Feature',
                 'geometry' => json_decode($p->geom),
                 'properties' => [
+                    'id' => $p->id,
                     'name' => $p->name,
                     'description' => $p->description,
                     'image' => $p->image,
