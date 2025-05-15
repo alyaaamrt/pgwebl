@@ -49,8 +49,7 @@
 
                         <div class="mb-3">
                             <label for="image" class="form-label">Photo</label>
-                            <input type="file" class="form-control" id="image_point" name="image"
-                                onchange="document.getElementById('preview-image-point').src = window.URL.createObjectURL(this.files[0])">
+                            <input type="file" class="form-control" id="image_point" name="image" onchange="document.getElementById('preview-image-point').src = window.URL.createObjectURL(this.files[0])">
                             <img src="" alt="" id="preview-image-point" class="img-thumbnail"
                                 width="400">
 
@@ -173,7 +172,7 @@
     <script src="https://unpkg.com/@terraformer/wkt"></script>
 
     <script>
-        var map = L.map('map').setView([-6.9695601, 110.3717855], 14);
+        var map = L.map('map').setView([-6.9551437, 110.3665924], 13);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -245,17 +244,31 @@
         var point = L.geoJson(null, {
             onEachFeature: function(feature, layer) {
 
-                var routedelete = "{{route('points.destroy', ':id')}}";
+                var routedelete = "{{ route('points.destroy', ':id') }}";
                 routedelete = routedelete.replace(':id', feature.properties.id);
+
+                var routeedit = "{{ route('points.edit', ':id') }}";
+                routeedit = routeedit.replace(':id', feature.properties.id);
 
                 var popupContent = "Nama: " + feature.properties.name + "<br>" +
                     "Deskripsi: " + feature.properties.description + "<br>" +
                     "Dibuat: " + feature.properties.created_at + "<br>" +
-                    "<img src='{{ asset('storage/images') }}/" + feature.properties.image + "' width='250' alt=''>" + "<br>" +
+                    "<img src='{{ asset('storage/images') }}/" + feature.properties.image +
+                    "' width='250' alt=''>" + "<br>" +
+
+                    "<div class='row mt-4'>" +
+                    "<div class='col-6'>" +
+                    "<a href='" + routeedit + "' class='btn btn-warning btn-sm'><i class='fa-solid fa-pen-to-square'></i></a>" +
+                    "</div>" +
+
+                    "<div class='col-6 text-end'>" +
                     "<form method='POST' action='" + routedelete + "'>" +
-                    '@csrf' + '@method("DELETE")' +
-                    "<button type='submit'class ='btn btn-sm btn-danger'onclick='return confirm(`Yakin akan dihapus?`)'><i class='fa-solid fa-trash-can'></i></button>" +
-                    "</form>";
+                    '@csrf' + '@method('DELETE')' +
+                    "<button type='submit' class='btn btn-sm btn-danger' onclick='return confirm(`Yakin akan dihapus?`)'><i class='fa-solid fa-trash-can'></i></button>" +
+                    "</form>" +
+                    "</div>" +
+                    "</div>";
+
                 layer.on({
                     click: function(e) {
                         point.bindPopup(popupContent);
@@ -275,16 +288,27 @@
         //GeoJSON Polylines
         var polyline = L.geoJson(null, {
             onEachFeature: function(feature, layer) {
-                var routedelete = "{{route('polylines.destroy', ':id')}}";
+                var routedelete = "{{ route('polylines.destroy', ':id') }}";
                 routedelete = routedelete.replace(':id', feature.properties.id);
+
+                var routeedit = "{{ route('polylines.edit', ':id') }}";
+                routeedit = routeedit.replace(':id', feature.properties.id);
 
                 var popupContent = "Nama: " + feature.properties.name + "<br>" +
                     "Deskripsi: " + feature.properties.description + "<br>" +
                     "Panjang: " + feature.properties.length_km.toFixed(2) + " km<br>" +
                     "Dibuat: " + feature.properties.created_at + "<br>" +
-                    "<img src='{{ asset('storage/images') }}/" + feature.properties.image + "' width='250' alt=''>" + "<br>" +
+                    "<img src='{{ asset('storage/images') }}/" + feature.properties.image +
+                    "' width='250' alt=''>" + "<br>" +
+
+                    "<div class='row mt-4'>" +
+                    "<div class='col-6'>" +
+                    "<a href='" + routeedit + "' class='btn btn-warning btn-sm'><i class='fa-solid fa-pen-to-square'></i></a>" +
+                    "</div>" +
+
+                    "<div class='col-6 text-end'>" +
                     "<form method='POST' action='" + routedelete + "'>" +
-                    '@csrf' + '@method("DELETE")' +
+                    '@csrf' + '@method('DELETE')' +
                     "<button type='submit'class ='btn btn-sm btn-danger'onclick='return confirm(`Yakin akan dihapus?`)'><i class='fa-solid fa-trash-can'></i></button>" +
                     "</form>";
                 layer.on({
@@ -307,16 +331,27 @@
         var polygon = L.geoJson(null, {
             onEachFeature: function(feature, layer) {
 
-                var routedelete = "{{route('polygons.destroy', ':id')}}";
+                var routedelete = "{{ route('polygons.destroy', ':id') }}";
                 routedelete = routedelete.replace(':id', feature.properties.id);
+
+                var routeedit = "{{ route('polygons.edit', ':id') }}";
+                routeedit = routeedit.replace(':id', feature.properties.id);
 
                 var popupContent = "Nama: " + feature.properties.name + "<br>" +
                     "Deskripsi: " + feature.properties.description + "<br>" +
                     "Luas: " + feature.properties.luas_hektar.toFixed(2) + " hektar<br>" +
                     "Dibuat: " + feature.properties.created_at + "<br>" +
-                    "<img src='{{ asset('storage/images') }}/" + feature.properties.image + "' width='250' alt=''>" + "<br>" +
+                    "<img src='{{ asset('storage/images') }}/" + feature.properties.image +
+                    "' width='250' alt=''>" + "<br>" +
+
+                    "<div class='row mt-4'>" +
+                    "<div class='col-6'>" +
+                    "<a href='" + routeedit + "' class='btn btn-warning btn-sm'><i class='fa-solid fa-pen-to-square'></i></a>" +
+                    "</div>" +
+
+                    "<div class='col-6 text-end'>" +
                     "<form method='POST' action='" + routedelete + "'>" +
-                    '@csrf' + '@method("DELETE")' +
+                    '@csrf' + '@method('DELETE')' +
                     "<button type='submit'class ='btn btn-sm btn-danger'onclick='return confirm(`Yakin akan dihapus?`)'><i class='fa-solid fa-trash-can'></i></button>" +
                     "</form>";
                 layer.on({

@@ -1,46 +1,34 @@
 @extends('layout.template')
 
 @section('content')
-    <table class="table table-striped table-bordered text-center align-middle">
-        <thead class="table-dark">
+<div class="container mt-2">
+    <table class="table table-striped text-center align-middle">
+        <thead>
             <tr>
                 <th>No</th>
-                <th>Nama</th>
-                <th>NIM</th>
-                <th>Kelas</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Created At</th>
+                <th>Updated At</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>Allya</td>
-                <td>521994</td>
-                <td>A</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Zahra</td>
-                <td>764357</td>
-                <td>A</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Nova</td>
-                <td>862765</td>
-                <td>B</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Riska</td>
-                <td>518263</td>
-                <td>A</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>Ratu</td>
-                <td>457432</td>
-                <td>B</td>
-            </tr>
+            {{-- loop points data --}}
+            @foreach ( $points as $p)
+                <tr>
+                    <td>{{ $p->id }}</td>
+                    <td>{{ $p->name }}</td>
+                    <td>{{ $p->description }}</td>
+                    <td>
+                        <img src="{{ asset('storage/images/' . $p->image) }}" alt=""
+                        width="200" title="{{ $p->image }}"
+                        {{ $p->image }}</td>
+                    <td>{{ $p->created_at }}</td>
+                    <td>{{ $p->updated_at }}</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
+</div>
 @endsection
